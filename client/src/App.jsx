@@ -2,8 +2,10 @@ import {Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import LandingPage from './pages/LandingPage'
 import RedactPdf from './pages/RedactPdf';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
 
-axios.defaults.baseURL = "http://localhost:3500";
+axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
 
 export default function App() {
@@ -11,6 +13,8 @@ export default function App() {
       <Routes>
         <Route path='/' element={<LandingPage/>}/>
         <Route path='/redact-pdf' element={<RedactPdf/>}/>
+        <Route path='/signup' element={<Signup/>}/>
+        <Route path='/login' element={<Login/>}/>
       </Routes>
   );
 }
