@@ -13,45 +13,21 @@ const SUPPORTED_LANGUAGES = [
   { id: "css", name: "CSS" },
   { id: "json", name: "JSON" },
 ];
-const LANGUAGE_IDS = {
-    'python': 71,
-    'javascript': 63,
-    'java': 62,
-    'cpp': 54,
-    'c': 50,
-    'go': 60,
-    'rust': 73
-  };
-  
 
 const TEMPLATES = {
-  cpp: `class NumberContainers {
-public:
-    NumberContainers() { }
-
-    void change(int index, int number) { }
-
-    int find(int number) { return -1; }
+  cpp: `Start coding in ${language}...`,
 };
-
-/**
- * Usage:
- * NumberContainers* obj = new NumberContainers();
- * obj->change(index, number);
- * int param_2 = obj->find(number);
- */`,
-};
-
 
 export function MonacoEditorWrapper({ onMount }) {
   const monacoRef = useRef(null);
   const editorRef = useRef(null);
   const [language, setLanguage] = useState("cpp");
-  const [stdin, setStdin] = useState("");
 
   useEffect(() => {
     if (editorRef.current) {
-      editorRef.current.setValue(TEMPLATES[language] || `// Start coding in ${language}...`);
+      editorRef.current.setValue(
+        TEMPLATES[language] || `// Start coding in ${language}...`
+      );
     }
   }, [language]);
 
@@ -63,30 +39,9 @@ export function MonacoEditorWrapper({ onMount }) {
 
   const handleReset = () => {
     if (editorRef.current) {
-      editorRef.current.setValue(TEMPLATES[language] || `// Start coding in ${language}...`);
-    }
-  };
-  const handleSubmit = async () => {
-    if (editorRef.current) {
-      const formattedData = {
-        code: editorRef.current.getValue(),
-        language_id: LANGUAGE_IDS[language],
-        stdin: stdin
-      };
-
-      try {
-        const response = await fetch('http://localhost:4000/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formattedData)
-        });
-        const result = await response.json();
-        console.log(result);
-      } catch (error) {
-        console.error('Submission error:', error);
-      }
+      editorRef.current.setValue(
+        TEMPLATES[language] || `// Start coding in ${language}...`
+      );
     }
   };
 
@@ -108,22 +63,14 @@ export function MonacoEditorWrapper({ onMount }) {
             ))}
           </select>
         </div>
-        <div className="flex gap-4">
-        <textarea 
-          value={stdin}
-          onChange={(e) => setStdin(e.target.value)}
-          placeholder="Enter input here..."
-          className="w-full p-2 border rounded"
-        />
-      </div>
 
         {/* Buttons (Center) */}
-        <div className="flex justify-center gap-3">
-          <button className="flex items-center gap-2 px-4 py-1.5 text-green-400 border border-green-400 rounded-md transition duration-200 hover:bg-green-500 hover:text-white">
+        <div className="flex justify-center gap-2">
+          <button className="flex items-center gap-2 px-4 py-1.5 text-blue-400 rounded-md transition hover:bg-blue-400 hover:bg-opacity-20">
             <Play size={16} />
             Run
           </button>
-          <button onClick={handleSubmit} className="flex items-center gap-2 px-4 py-1.5 text-orange-400 border border-orange-400 rounded-md transition duration-200 hover:bg-orange-500 hover:text-white">
+          <button className="flex items-center gap-2 px-4 py-1.5 text-white rounded-md transition hover:bg-white hover:bg-opacity-20">
             <Upload size={16} />
             Submit
           </button>
@@ -155,7 +102,9 @@ export function MonacoEditorWrapper({ onMount }) {
         height="calc(100vh - 3rem)"
         width="100%"
         language={language}
-        defaultValue={TEMPLATES[language] || `// Start coding in ${language}...`}
+        defaultValue={
+          TEMPLATES[language] || `// Start coding in ${language}...`
+        }
         onMount={(editor, monaco) => {
           monacoRef.current = monaco;
           editorRef.current = editor;
