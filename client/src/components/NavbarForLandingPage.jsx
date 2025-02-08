@@ -4,7 +4,9 @@ import {
   FaShieldAlt, 
   FaBars, 
   FaTimes, 
-  FaGithub, 
+  FaGithub,
+  FaCodeBranch, 
+  FaCube,
   FaTwitter, 
   FaLinkedin 
 } from 'react-icons/fa';
@@ -62,8 +64,8 @@ const Navbar = ({ smoothScroll, featuresRef, securityRef, aboutRef }) => {
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo Section */}
         <div className="flex items-center space-x-3">
-          <FaShieldAlt className="text-blue-500 text-2xl" />
-          <h1 className="text-2xl font-bold text-white font-spaceGrotesk">DataRakshak</h1>
+          <FaCodeBranch className="text-blue-500 text-2xl" />
+          <h1 className="text-2xl font-bold text-white font-spaceGrotesk">CodeCollab</h1>
         </div>
 
         {/* Desktop Navigation */}

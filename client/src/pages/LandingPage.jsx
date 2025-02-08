@@ -6,23 +6,25 @@ import {
   FaLock, 
   FaServer, 
   FaFile, 
-  FaChartLine, 
-  FaUserShield, 
-  FaLanguage, 
-  FaShareAlt,
+  FaGitAlt,
+  FaBug,
+  FaUsers,
+  FaFolder,
+  FaTerminal,
+  FaSync,
+  FaCogs,
   FaRobot,
-  FaGavel,
-  FaEye,
-  FaCloudUploadAlt,
+  FaCloud,
   FaChevronRight,
-  FaChevronDown
+  FaChevronDown,
+  FaCodeBranch
 } from 'react-icons/fa';
 import { 
   HiCode, 
   HiDatabase, 
   HiTemplate 
 } from 'react-icons/hi';
-import { MdPrivacyTip, MdVerifiedUser } from 'react-icons/md';
+import { MdDevices, MdPrivacyTip, MdVerifiedUser } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
@@ -164,56 +166,56 @@ const LandingPage = () => {
   const features = [
     {
       icon: <FaRobot className="text-blue-400" />,
-      title: "AI-Powered Detection",
-      description: "Advanced machine learning algorithms identify and redact sensitive information with unprecedented accuracy."
+      title: "Smart Autocomplete",
+      description: "AI-powered code suggestions and intelligent completions across multiple programming languages."
     },
     {
-      icon: <FaFile className="text-green-400" />,
-      title: "Multi-Format Support",
-      description: "Comprehensive PII detection across PDFs, images, documents, and various file types."
+      icon: <FaGitAlt className="text-green-400" />,
+      title: "Version Control",
+      description: "Built-in Git integration with visual merge conflict resolution and branch management."
     },
     {
-      icon: <MdPrivacyTip className="text-purple-400" />,
-      title: "Adaptive Redaction",
-      description: "Intelligent redaction with configurable sensitivity levels and custom privacy rules."
+      icon: <FaBug className="text-purple-400" />,
+      title: "Advanced Debugging",
+      description: "Interactive debugging with breakpoints, variable inspection, and real-time execution control."
     },
     {
-      icon: <FaChartLine className="text-indigo-400" />,
-      title: "Comprehensive Analytics",
-      description: "Detailed insights into data processing, redaction activities, and privacy compliance."
+      icon: <FaUsers className="text-indigo-400" />,
+      title: "Real-time Collaboration",
+      description: "Seamless multi-user editing with cursor presence and live code sharing."
     },
     {
-      icon: <FaLanguage className="text-teal-400" />,
-      title: "Multilingual Support",
-      description: "Detect and protect PII across multiple languages with advanced linguistic processing."
+      icon: <FaFolder className="text-teal-400" />,
+      title: "File Management",
+      description: "Intuitive project organization with integrated file explorer and search capabilities."
     },
     {
-      icon: <MdVerifiedUser className="text-orange-400" />,
-      title: "Regulatory Compliance",
-      description: "Built-in compliance with GDPR, CCPA, HIPAA, and global data protection standards."
+      icon: <FaTerminal className="text-orange-400" />,
+      title: "Integrated Terminal",
+      description: "Built-in terminal for running commands and managing development workflows."
     }
   ];
 
   const securityFeatures = [
     {
-      icon: <FaLock className="text-red-400" />,
-      title: "End-to-End Encryption",
-      description: "Military-grade encryption protects your sensitive data throughout the entire process."
+      icon: <FaSync className="text-red-400" />,
+      title: "Auto-Save & Recovery",
+      description: "Automatic code saving and session recovery to prevent work loss."
     },
     {
-      icon: <FaShieldAlt className="text-yellow-400" />,
-      title: "Legal Compliance Framework",
-      description: "Automated compliance tracking and comprehensive audit trails for legal protection."
+      icon: <FaCogs className="text-yellow-400" />,
+      title: "Customizable Environment",
+      description: "Personalized editor settings, themes, and keyboard shortcuts."
     },
     {
-      icon: <FaEye className="text-cyan-400" />,
-      title: "Intelligent Monitoring",
-      description: "Continuous scanning and real-time alerts for potential PII exposure risks."
+      icon: <MdDevices className="text-cyan-400" />,
+      title: "Cross-Platform",
+      description: "Consistent development experience across all devices and browsers."
     },
     {
-      icon: <FaCloudUploadAlt className="text-sky-400" />,
-      title: "Secure Cloud Processing",
-      description: "Zero-knowledge architecture ensures maximum privacy during data processing."
+      icon: <FaCloud className="text-sky-400" />,
+      title: "Cloud Computing",
+      description: "Cloud-based compilation and execution with zero local setup."
     }
   ];
 
@@ -307,24 +309,27 @@ const LandingPage = () => {
             className="max-w-4xl mx-auto space-y-8"
           >
             {/* Central unlock button */}
-            <motion.button
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ 
-                type: "spring",
-                stiffness: 200,
-                damping: 20,
-                delay: 0.8
-              }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="mb-8 bg-gray-900/50 backdrop-blur-md text-gray-300 px-6 py-3 rounded-full 
-                flex items-center space-x-2 mx-auto hover:bg-gray-800/50 transition-all duration-300"
-            >
-              <FaShieldAlt className="text-blue-400" />
-                <span>DataRakshak by SafeGuardians</span>
-              <FaChevronRight className="text-gray-400" />
-            </motion.button>
+
+            <Link to="/login">
+              <motion.button
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ 
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 20,
+                  delay: 0.8
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="mb-8 bg-gray-900/50 backdrop-blur-md text-gray-300 px-6 py-3 rounded-full 
+                  flex items-center space-x-2 mx-auto hover:bg-gray-800/50 transition-all duration-300"
+              >
+                <FaCodeBranch className="text-blue-400" />
+                  <span>CodeCollab IDE by HashItOut</span>
+                <FaChevronRight className="text-gray-400" />
+              </motion.button>
+            </Link>
 
             <motion.h1 
               variants={{
@@ -340,7 +345,7 @@ const LandingPage = () => {
                 transition={{ duration: 0.8, delay: 1.2 }}
                 className="bg-gradient-to-r from-white via-gray-100 to-gray-300 text-transparent bg-clip-text"
               >
-                One-click PII
+                Code Together,
               </motion.span>
               <br />
               <motion.span 
@@ -349,7 +354,7 @@ const LandingPage = () => {
                 transition={{ duration: 0.8, delay: 1.4 }}
                 className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text"
               >
-                Redaction
+                Build Faster
               </motion.span>
             </motion.h1>
             
@@ -361,7 +366,7 @@ const LandingPage = () => {
               transition={{ duration: 0.8, delay: 1.6 }}
               className="text-xl text-gray-400 mb-12 font-outfit max-w-2xl mx-auto"
             >
-              Safeguard your data with our advanced AI-powered PII redaction system
+              Experience real-time collaborative coding with intelligent features and powerful development tools
             </motion.p>
 
             <motion.div 
@@ -372,22 +377,24 @@ const LandingPage = () => {
               transition={{ duration: 0.8, delay: 1.8 }}
               className="flex justify-center space-x-4"
             >
-              <motion.button
+              <Link to="/signup">
+               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-3 rounded-full font-outfit 
                   hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg shadow-blue-500/25"
               >
-                <a href="http://172.21.5.">Get Started</a>
-              </motion.button>
-              <Link to="/redact-pdf">
+                Sign Up
+               </motion.button>
+              </Link>
+              <Link to="/login">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="border border-gray-700 bg-black/50 backdrop-blur-sm px-8 py-3 rounded-full font-outfit 
                     hover:bg-gray-900 transition-all duration-300 text-gray-300"
                 >
-                  Try Now
+                  Log In
                 </motion.button>
               </Link>
             </motion.div>
@@ -522,26 +529,26 @@ const LandingPage = () => {
               variants={itemVariants}
               className="text-4xl font-bold mb-6 text-white font-spaceGrotesk"
             >
-              Ready to Protect Your Data?
+              Ready to Code Together?
             </motion.h2>
             <motion.p 
               variants={itemVariants}
               className="text-xl text-gray-400 mb-8 font-outfit"
             >
-              Start securing your sensitive information with our advanced AI-powered redaction system
+             Start collaborating with your team using our powerful development environment
             </motion.p>
             <motion.div 
               variants={itemVariants}
               className="flex justify-center space-x-4"
             >
-              <Link to="/redact-pdf">
+              <Link to="/signup">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-3 rounded-full font-outfit 
                     hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg shadow-blue-500/25"
                 >
-                  Try It Now               
+                  Start Coding                
                 </motion.button>
               </Link>
               <motion.button
@@ -567,9 +574,9 @@ const LandingPage = () => {
         <div className="container mx-auto px-6">
           {/* Top Section with Logo and Description */}
           <div className="py-12 text-center border-b border-gray-800">
-            <h2 className="text-3xl font-bold text-white font-spaceGrotesk mb-4">SafeGuardians</h2>
+            <h2 className="text-3xl font-bold text-white font-spaceGrotesk mb-4">CodeCollab IDE</h2>
             <p className="max-w-2xl mx-auto text-gray-400 font-inter">
-              Protecting your digital assets with advanced AI-powered PII redaction solutions.
+            Empowering developers with collaborative coding tools and intelligent features.
             </p>
           </div>
 
@@ -579,7 +586,7 @@ const LandingPage = () => {
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-white font-outfit">About</h3>
               <p className="text-sm text-gray-400">
-                A project developed at Sardar Patel Institute of Technology, focused on securing sensitive information through innovative AI solutions.
+                A project developed at Sardar Patel Institute of Technology, revolutionising collaborative development through innovative AI solutions.
               </p>
               <div className="flex space-x-4 pt-4">
                 <a href="#" className="hover:text-blue-400 transition-colors p-2 bg-gray-800 rounded-full">
@@ -605,15 +612,12 @@ const LandingPage = () => {
               <h3 className="text-lg font-semibold text-white font-outfit">Our Team</h3>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div className="space-y-2">
-                  <p className="text-gray-400 hover:text-white transition-colors">Nikhil Chaudhari</p>
-                  <p className="text-gray-400 hover:text-white transition-colors">Naufil Asar</p>
-                  <p className="text-gray-400 hover:text-white transition-colors">Pulkit Dwivedi</p>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-gray-400 hover:text-white transition-colors">Rohan Pawar</p>
-                  <p className="text-gray-400 hover:text-white transition-colors">Madhura Kanfade</p>
                   <p className="text-gray-400 hover:text-white transition-colors">Harshit Bhanushali</p>
+                  <p className="text-gray-400 hover:text-white transition-colors">Harsh Gosula</p>
+                  <p className="text-gray-400 hover:text-white transition-colors">Anushka Shendge</p>
+                  <p className="text-gray-400 hover:text-white transition-colors">Shubham Rajapurkar</p>
                 </div>
+         
               </div>
             </div>
 
@@ -634,7 +638,7 @@ const LandingPage = () => {
         <div className="border-t border-gray-800 bg-gray-950">
           <div className="container mx-auto px-6 py-4">
             <div className="text-sm text-center text-gray-400">
-              © {new Date().getFullYear()} SafeGuardians. All rights reserved.
+              © {new Date().getFullYear()} CodeCollab IDE. All rights reserved.
             </div>
           </div>
         </div>
