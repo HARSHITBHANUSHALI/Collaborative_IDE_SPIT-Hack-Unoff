@@ -16,7 +16,7 @@ const Login = () => {
     })
     if(res.data){
       login(res.data);
-      navigate('/new');
+      navigate('/home');
     }
   }
   return (

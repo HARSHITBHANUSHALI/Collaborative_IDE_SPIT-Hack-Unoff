@@ -19,6 +19,11 @@ app.use(cors(corsOptions));
 app.use(cookieParser());
 
 app.use('/auth', require('./routes/authRoutes'));
+app.use(verifyJWT);
+
+app.use('/api/commit' , require('./routes/commitRoutes'))
+
+
 app.use('/compile', require('./routes/compileRoutes'));
 app.use('/projects', require('./routes/projectRoutes'));
 

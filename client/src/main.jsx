@@ -9,19 +9,22 @@ import {
   ClientSideSuspense,
 } from "@liveblocks/react/suspense";
 import { UserContextProvider } from './userContext';
+import { ThemeContextProvider } from './ThemeContext';
 
 const root = createRoot(document.getElementById('root'));
 
 root.render(
   <StrictMode>
     <UserContextProvider>
-      <BrowserRouter>
-        <LiveblocksProvider publicApiKey={"pk_dev_2rQ_sf_wK2K5sLImvR6lkQyLrAh6bmpZMaayf6KIw1uHYmueOpeBhHcBiWayEZ8E"}>
-          <RoomProvider id="my-room">
-            <App />
-          </RoomProvider>
-        </LiveblocksProvider>
-      </BrowserRouter>
+      <ThemeContextProvider>
+        <BrowserRouter>
+          <LiveblocksProvider publicApiKey={"pk_dev_2rQ_sf_wK2K5sLImvR6lkQyLrAh6bmpZMaayf6KIw1uHYmueOpeBhHcBiWayEZ8E"}>
+            <RoomProvider id="my-room">
+              <App />
+            </RoomProvider>
+          </LiveblocksProvider>
+        </BrowserRouter>
+      </ThemeContextProvider>
     </UserContextProvider>
   </StrictMode>
 );

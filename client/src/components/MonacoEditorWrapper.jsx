@@ -2,6 +2,8 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { Editor } from "@monaco-editor/react";
 import { Play, Upload, RefreshCw, FileCode, Save } from "lucide-react";
 import { debounce } from 'lodash';
+import axios from "axios";
+
 const SUPPORTED_LANGUAGES = [
   { id: "javascript", name: "JavaScript" },
   { id: "typescript", name: "TypeScript" },
@@ -13,6 +15,7 @@ const SUPPORTED_LANGUAGES = [
   { id: "css", name: "CSS" },
   { id: "json", name: "JSON" },
 ];
+//const {projectId , fileId} = useParams();
 const LANGUAGE_IDS = {
   python: 71,
   javascript: 63,
@@ -23,7 +26,7 @@ const LANGUAGE_IDS = {
   rust: 73,
 };
 
-export function MonacoEditorWrapper({ onMount, fileId, userId }) {
+export function MonacoEditorWrapper({ onMount , projectId , fileId}) {
   const monacoRef = useRef(null);
   const editorRef = useRef(null);
   const [language, setLanguage] = useState("cpp");
@@ -44,24 +47,22 @@ export function MonacoEditorWrapper({ onMount, fileId, userId }) {
     if (!editorRef.current) return;
     
     setIsSaving(true);
+    //console.log(editorRef.current.getValue())
     try {
-      const response = await fetch("http://localhost:4000/api/commit/save-commit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fileId,
-          content: editorRef.current.getValue(),
-          userId,
-          previousVersionId: null
-        }),
-      });
-
-      const data = await response.json();
-      if (data.success) {
+    //   const response = await fetch("http://localhost:4000/api/commit/save-commit", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       content: editorRef.current.getValue()
+    //     }),
+    //   });
+      const response = await axios.post('http://localhost:4000/api/commit/save-commit', {content : editorRef.current.getValue() , fileId})
+      if(response.data){
         setOutput("Code saved successfully!");
-      } else {
+      }
+      else{
         throw new Error(data.error || "Failed to save code");
       }
     } catch (error) {

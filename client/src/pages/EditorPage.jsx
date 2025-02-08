@@ -33,6 +33,8 @@ const EditorPage = () => {
   return (
     <div className="h-screen">
       <MonacoEditorWrapper
+        fileId={fileId}
+        projectId={projectId}
         initialValue={file.content}
         onSave={async (content) => {
           try {
