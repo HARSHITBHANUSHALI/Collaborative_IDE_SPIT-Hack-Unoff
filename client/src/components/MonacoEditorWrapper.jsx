@@ -14,14 +14,14 @@ const SUPPORTED_LANGUAGES = [
   { id: "json", name: "JSON" },
 ];
 
-const TEMPLATES = {
-  cpp: `Start coding in ${language}...`
-};
 
 export function MonacoEditorWrapper({ onMount }) {
   const monacoRef = useRef(null);
   const editorRef = useRef(null);
   const [language, setLanguage] = useState("cpp");
+  const TEMPLATES = {
+    cpp: `//Start coding in ${language}...`
+  };
 
   useEffect(() => {
     if (editorRef.current) {
