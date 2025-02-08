@@ -13,6 +13,16 @@ const SUPPORTED_LANGUAGES = [
   { id: "css", name: "CSS" },
   { id: "json", name: "JSON" },
 ];
+const LANGUAGE_IDS = {
+    'python': 71,
+    'javascript': 63,
+    'java': 62,
+    'cpp': 54,
+    'c': 50,
+    'go': 60,
+    'rust': 73
+  };
+  
 
 const TEMPLATES = {
   cpp: `class NumberContainers {
@@ -31,6 +41,30 @@ public:
  * int param_2 = obj->find(number);
  */`,
 };
+  const handleSubmit = async () => {
+    if (editorRef.current) {
+      const formattedData = {
+        code: editorRef.current.getValue(),
+        language_id: LANGUAGE_IDS[language],
+        stdin: stdin
+      };
+
+      try {
+        const response = await fetch('http://localhost:8000/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formattedData)
+        });
+        const result = await response.json();
+        console.log(result);
+      } catch (error) {
+        console.error('Submission error:', error);
+      }
+    }
+  };
+
 
 export function MonacoEditorWrapper({ onMount }) {
   const monacoRef = useRef(null);
@@ -52,6 +86,29 @@ export function MonacoEditorWrapper({ onMount }) {
   const handleReset = () => {
     if (editorRef.current) {
       editorRef.current.setValue(TEMPLATES[language] || `// Start coding in ${language}...`);
+    }
+  };
+  const handleSubmit = async () => {
+    if (editorRef.current) {
+      const formattedData = {
+        code: editorRef.current.getValue(),
+        language_id: LANGUAGE_IDS[language],
+        stdin: stdin
+      };
+
+      try {
+        const response = await fetch('http://localhost:4000/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formattedData)
+        });
+        const result = await response.json();
+        console.log(result);
+      } catch (error) {
+        console.error('Submission error:', error);
+      }
     }
   };
 
@@ -80,7 +137,7 @@ export function MonacoEditorWrapper({ onMount }) {
             <Play size={16} />
             Run
           </button>
-          <button className="flex items-center gap-2 px-4 py-1.5 text-orange-400 border border-orange-400 rounded-md transition duration-200 hover:bg-orange-500 hover:text-white">
+          <button onClick={handleSubmit} className="flex items-center gap-2 px-4 py-1.5 text-orange-400 border border-orange-400 rounded-md transition duration-200 hover:bg-orange-500 hover:text-white">
             <Upload size={16} />
             Submit
           </button>
