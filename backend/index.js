@@ -29,6 +29,8 @@ app.use(cors({
 
 app.use('/auth', require('./routes/authRoutes'));
 
-app.use(verifyJWT);
+// app.use(verifyJWT);
+
+app.use('/compile', require('./routes/compileRoutes'));
 
 app.listen(port,()=>console.log(`Server running on Port ${port}`));
