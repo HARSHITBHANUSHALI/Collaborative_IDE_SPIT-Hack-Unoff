@@ -39,13 +39,6 @@ public:
  * obj->change(index, number);
  * int param_2 = obj->find(number);
  */`,
-  javascript: `// Start coding in JavaScript...`,
-  python: `# Start coding in Python...`,
-  java: `// Start coding in Java...`,
-  csharp: `// Start coding in C#...`,
-  html: `<!-- Start coding in HTML... -->`,
-  css: `/* Start coding in CSS... */`,
-  json: `// Start coding in JSON...`,
 };
 
 export function MonacoEditorWrapper({ onMount }) {
@@ -152,7 +145,7 @@ export function MonacoEditorWrapper({ onMount }) {
       const formattedData = {
         code: editorRef.current.getValue(),
         language_id: LANGUAGE_IDS[language],
-        stdin: stdin,
+        stdin: "", // Define stdin or remove if not needed
       };
       try {
         const response = await fetch("http://localhost:4000/compile", {
@@ -166,7 +159,6 @@ export function MonacoEditorWrapper({ onMount }) {
         setOutput(result.output || "No output received");
       } catch (error) {
         console.error("Submission error:", error);
-        setOutput("Error occurred while executing the code.");
       }
     }
   };

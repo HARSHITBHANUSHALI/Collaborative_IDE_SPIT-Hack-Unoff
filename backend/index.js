@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const connectDB = require('./config/dbConn')
+const connectDB = require('./config/dbConn');
 const verifyJWT = require('./middleware/verifyJwt');
 const cookieParser = require('cookie-parser');
 const corsOptions = require('./config/corsOptions');
@@ -15,18 +15,11 @@ app.use(credentials);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-const allowedOrigins = ['http://localhost:5173']; // Add allowed frontend URLs
-
 app.use(cors(corsOptions));
-
 app.use(cookieParser());
 
-
 app.use('/auth', require('./routes/authRoutes'));
-
-app.use(verifyJWT); 
-
-app.use('/projects', require('./routes/projectRoutes')); // Add this line
 app.use('/compile', require('./routes/compileRoutes'));
+app.use('/projects', require('./routes/projectRoutes'));
 
 app.listen(port,()=>console.log(`Server running on Port ${port}`));
