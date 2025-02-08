@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { SparklesCore } from "../components/ui/sparkles";
+import axios from "axios";
+import { UserContext } from "@/userContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const {login} = useContext(UserContext);
+  const navigate = useNavigate();
+  async function handleLogin(e){
+    e.preventDefault();
+    const res = await axios.post("http://localhost:4000/auth/login", {
+        email , password
+    })
+    if(res.data){
+      login(res.data);
+      navigate('/new');
+    }
+  }
   return (
     <div className="flex min-h-screen bg-black text-white relative overflow-hidden">
       {/* Sparkles Background */}
@@ -21,13 +38,15 @@ const Login = () => {
       <div className="relative z-10 flex justify-center items-center w-full p-10">
         <div className="w-full max-w-md bg-black/50 backdrop-blur-sm text-white p-6 rounded-lg shadow-lg border border-white/20">
           <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleLogin}>
             <div>
               <label className="block text-sm font-medium my-1">Email</label>
               <input
                 type="email"
                 className="w-full p-2 bg-black/50 border border-white/20 rounded-md focus:ring focus:ring-white/30 text-white placeholder-white/50"
                 placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -37,6 +56,8 @@ const Login = () => {
                 type="password"
                 className="w-full p-2 bg-black/50 border border-white/20 rounded-md focus:ring focus:ring-white/30 text-white placeholder-white/50"
                 placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>

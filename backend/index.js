@@ -12,11 +12,20 @@ connectDB();
 
 app.use(express.json());
 
+const allowedOrigins = ['http://localhost:5173']; // Add allowed frontend URLs
+
 app.use(cors({
-    origin: "*",
-    methods: ['GET', 'POST', 'PATCH' , 'PUT', 'DELETE'],
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
     credentials: true 
 }));
+
 
 app.use('/auth', require('./routes/authRoutes'));
 
