@@ -4,33 +4,29 @@ const app = express();
 const cors = require('cors');
 const connectDB = require('./config/dbConn')
 const verifyJWT = require('./middleware/verifyJwt');
-
+const cookieParser = require('cookie-parser');
+const corsOptions = require('./config/corsOptions');
+const credentials = require('./middleware/credentials');
 
 const port = process.env.PORT || 4000;
 
 connectDB();
-
+app.use(credentials);
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 const allowedOrigins = ['http://localhost:5173']; // Add allowed frontend URLs
 
-app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
-    credentials: true 
-}));
+app.use(cors(corsOptions));
+
+app.use(cookieParser());
 
 
 app.use('/auth', require('./routes/authRoutes'));
 
-// app.use(verifyJWT);
+app.use(verifyJWT); 
 
+app.use('/projects', require('./routes/projectRoutes')); // Add this line
 app.use('/compile', require('./routes/compileRoutes'));
 
 app.listen(port,()=>console.log(`Server running on Port ${port}`));

@@ -13,7 +13,6 @@ const SUPPORTED_LANGUAGES = [
   { id: "css", name: "CSS" },
   { id: "json", name: "JSON" },
 ];
-
 const LANGUAGE_IDS = {
   python: 71,
   javascript: 63,
@@ -22,6 +21,31 @@ const LANGUAGE_IDS = {
   c: 50,
   go: 60,
   rust: 73,
+};
+
+const TEMPLATES = {
+  cpp: `class NumberContainers {
+public:
+    NumberContainers() { }
+
+    void change(int index, int number) { }
+
+    int find(int number) { return -1; }
+};
+
+/**
+ * Usage:
+ * NumberContainers* obj = new NumberContainers();
+ * obj->change(index, number);
+ * int param_2 = obj->find(number);
+ */`,
+  javascript: `// Start coding in JavaScript...`,
+  python: `# Start coding in Python...`,
+  java: `// Start coding in Java...`,
+  csharp: `// Start coding in C#...`,
+  html: `<!-- Start coding in HTML... -->`,
+  css: `/* Start coding in CSS... */`,
+  json: `// Start coding in JSON...`,
 };
 
 export function MonacoEditorWrapper({ onMount }) {
@@ -169,7 +193,7 @@ export function MonacoEditorWrapper({ onMount }) {
       
       editorRef.current.createDecorationsCollection(decorations);
     }
-  }, [tabOverlay, cursorPosition]);
+  });
 
   return (
     <div className="flex flex-col h-screen bg-[#1E1F22] text-white">
@@ -190,14 +214,11 @@ export function MonacoEditorWrapper({ onMount }) {
         </div>
 
         <div className="flex justify-center gap-3">
-          <button className="flex items-center gap-2 px-4 py-1.5 text-blue-400 rounded-md transition hover:bg-blue-400 hover:bg-opacity-20">
+          <button className="flex items-center gap-2 px-4 py-1.5 text-green-400 border border-green-400 rounded-md transition duration-200 hover:bg-green-500 hover:text-white">
             <Play size={16} />
             Run
           </button>
-          <button
-            onClick={handleSubmit}
-            className="flex items-center gap-2 px-4 py-1.5 text-white rounded-md transition hover:bg-white hover:bg-opacity-20"
-          >
+          <button onClick={handleSubmit} className="flex items-center gap-2 px-4 py-1.5 text-orange-400 border border-orange-400 rounded-md transition duration-200 hover:bg-orange-500 hover:text-white">
             <Upload size={16} />
             Submit
           </button>
