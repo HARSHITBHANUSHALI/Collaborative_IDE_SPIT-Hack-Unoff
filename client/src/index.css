@@ -94,3 +94,8 @@
     @apply bg-background text-foreground;
     }
 }
+@layer components {
+  .monaco-editor .cursor-decoration {
+    @apply w-0.5 absolute pointer-events-none;
+  }
+}
