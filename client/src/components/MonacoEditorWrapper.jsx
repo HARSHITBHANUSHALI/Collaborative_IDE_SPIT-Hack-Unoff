@@ -14,11 +14,23 @@ const SUPPORTED_LANGUAGES = [
   { id: "json", name: "JSON" },
 ];
 
+const LANGUAGE_IDS = {
+  'python': 71,
+  'javascript': 63,
+  'java': 62,
+  'cpp': 54,
+  'c': 50,
+  'go': 60,
+  'rust': 73
+};
+
 
 export function MonacoEditorWrapper({ onMount }) {
   const monacoRef = useRef(null);
   const editorRef = useRef(null);
   const [language, setLanguage] = useState("cpp");
+  const [stdin, setStdin] = useState("");
+
   const TEMPLATES = {
     cpp: `//Start coding in ${language}...`
   };
@@ -38,6 +50,29 @@ export function MonacoEditorWrapper({ onMount }) {
   const handleReset = () => {
     if (editorRef.current) {
       editorRef.current.setValue(TEMPLATES[language] || `// Start coding in ${language}...`);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (editorRef.current) {
+      const formattedData = {
+        code: editorRef.current.getValue(),
+        language_id: LANGUAGE_IDS[language],
+        stdin: stdin
+      };
+      try {
+        const response = await fetch('http://localhost:4000/compile', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formattedData)
+        });
+        const result = await response.json();
+        console.log(result);
+      } catch (error) {
+        console.error('Submission error:', error);
+      }
     }
   };
 
@@ -66,7 +101,7 @@ export function MonacoEditorWrapper({ onMount }) {
             <Play size={16} />
             Run
           </button>
-          <button className="flex items-center gap-2 px-4 py-1.5 text-white rounded-md transition hover:bg-white hover:bg-opacity-20">
+          <button onClick={handleSubmit} className="flex items-center gap-2 px-4 py-1.5 text-white rounded-md transition hover:bg-white hover:bg-opacity-20">
             <Upload size={16} />
             Submit
           </button>
