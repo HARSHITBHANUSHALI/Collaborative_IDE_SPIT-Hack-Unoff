@@ -15,7 +15,7 @@ const SUPPORTED_LANGUAGES = [
 ];
 
 const TEMPLATES = {
-  cpp: `Start coding in ${language}...`,
+  cpp: `Start coding in ${language}...`
 };
 
 export function MonacoEditorWrapper({ onMount }) {
@@ -25,9 +25,7 @@ export function MonacoEditorWrapper({ onMount }) {
 
   useEffect(() => {
     if (editorRef.current) {
-      editorRef.current.setValue(
-        TEMPLATES[language] || `// Start coding in ${language}...`
-      );
+      editorRef.current.setValue(TEMPLATES[language] || `// Start coding in ${language}...`);
     }
   }, [language]);
 
@@ -39,9 +37,7 @@ export function MonacoEditorWrapper({ onMount }) {
 
   const handleReset = () => {
     if (editorRef.current) {
-      editorRef.current.setValue(
-        TEMPLATES[language] || `// Start coding in ${language}...`
-      );
+      editorRef.current.setValue(TEMPLATES[language] || `// Start coding in ${language}...`);
     }
   };
 
@@ -65,7 +61,7 @@ export function MonacoEditorWrapper({ onMount }) {
         </div>
 
         {/* Buttons (Center) */}
-        <div className="flex justify-center gap-2">
+        <div className="flex justify-center gap-3">
           <button className="flex items-center gap-2 px-4 py-1.5 text-blue-400 rounded-md transition hover:bg-blue-400 hover:bg-opacity-20">
             <Play size={16} />
             Run
@@ -102,9 +98,7 @@ export function MonacoEditorWrapper({ onMount }) {
         height="calc(100vh - 3rem)"
         width="100%"
         language={language}
-        defaultValue={
-          TEMPLATES[language] || `// Start coding in ${language}...`
-        }
+        defaultValue={TEMPLATES[language] || `// Start coding in ${language}...`}
         onMount={(editor, monaco) => {
           monacoRef.current = monaco;
           editorRef.current = editor;
