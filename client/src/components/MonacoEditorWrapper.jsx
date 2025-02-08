@@ -41,35 +41,13 @@ public:
  * int param_2 = obj->find(number);
  */`,
 };
-  const handleSubmit = async () => {
-    if (editorRef.current) {
-      const formattedData = {
-        code: editorRef.current.getValue(),
-        language_id: LANGUAGE_IDS[language],
-        stdin: stdin
-      };
-
-      try {
-        const response = await fetch('http://localhost:8000/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formattedData)
-        });
-        const result = await response.json();
-        console.log(result);
-      } catch (error) {
-        console.error('Submission error:', error);
-      }
-    }
-  };
 
 
 export function MonacoEditorWrapper({ onMount }) {
   const monacoRef = useRef(null);
   const editorRef = useRef(null);
   const [language, setLanguage] = useState("cpp");
+  const [stdin, setStdin] = useState("");
 
   useEffect(() => {
     if (editorRef.current) {
@@ -130,6 +108,14 @@ export function MonacoEditorWrapper({ onMount }) {
             ))}
           </select>
         </div>
+        <div className="flex gap-4">
+        <textarea 
+          value={stdin}
+          onChange={(e) => setStdin(e.target.value)}
+          placeholder="Enter input here..."
+          className="w-full p-2 border rounded"
+        />
+      </div>
 
         {/* Buttons (Center) */}
         <div className="flex justify-center gap-3">
