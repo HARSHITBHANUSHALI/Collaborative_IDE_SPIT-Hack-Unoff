@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import { Editor } from "@monaco-editor/react";
-import { Play, Upload, RefreshCw, FileCode } from "lucide-react";
+import { Play, Upload, RefreshCw, FileCode, Save } from "lucide-react";
 import { debounce } from 'lodash';
 const SUPPORTED_LANGUAGES = [
   { id: "javascript", name: "JavaScript" },
@@ -23,25 +23,7 @@ const LANGUAGE_IDS = {
   rust: 73,
 };
 
-const TEMPLATES = {
-  cpp: `class NumberContainers {
-public:
-    NumberContainers() { }
-
-    void change(int index, int number) { }
-
-    int find(int number) { return -1; }
-};
-
-/**
- * Usage:
- * NumberContainers* obj = new NumberContainers();
- * obj->change(index, number);
- * int param_2 = obj->find(number);
- */`,
-};
-
-export function MonacoEditorWrapper({ onMount }) {
+export function MonacoEditorWrapper({ onMount, fileId, userId }) {
   const monacoRef = useRef(null);
   const editorRef = useRef(null);
   const [language, setLanguage] = useState("cpp");
@@ -51,9 +33,43 @@ export function MonacoEditorWrapper({ onMount }) {
   const [cursorPosition, setCursorPosition] = useState({ lineNumber: 1, column: 1 });
   const [lastCode, setLastCode] = useState("");
   const [tabOverlay, setTabOverlay] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   const TEMPLATES = {
     cpp: `// Start coding in ${language}...`,
+  };
+
+  // Add save code function
+  const handleSaveCode = async () => {
+    if (!editorRef.current) return;
+    
+    setIsSaving(true);
+    try {
+      const response = await fetch("http://localhost:4000/api/commit/save-commit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fileId,
+          content: editorRef.current.getValue(),
+          userId,
+          previousVersionId: null
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setOutput("Code saved successfully!");
+      } else {
+        throw new Error(data.error || "Failed to save code");
+      }
+    } catch (error) {
+      console.error("Error saving code:", error);
+      setOutput(`Error saving code: ${error.message}`);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   // Debounced function to send code changes to backend
@@ -189,7 +205,6 @@ export function MonacoEditorWrapper({ onMount }) {
 
   return (
     <div className="flex flex-col h-screen bg-[#1E1F22] text-white">
-      {/* Rest of the JSX remains the same */}
       <div className="grid grid-cols-3 items-center p-3 bg-[#282C34] border-b border-gray-700">
         <div>
           <select
@@ -217,6 +232,15 @@ export function MonacoEditorWrapper({ onMount }) {
         </div>
 
         <div className="flex justify-end gap-2">
+          <button
+            onClick={handleSaveCode}
+            disabled={isSaving}
+            className="flex items-center gap-2 px-3 py-1.5 text-white bg-green-600 rounded-md hover:bg-green-700 transition disabled:opacity-50"
+            title="Save Code"
+          >
+            <Save size={16} />
+            {isSaving ? 'Saving...' : 'Save'}
+          </button>
           <button
             onClick={handleFormatCode}
             className="flex items-center gap-2 px-3 py-1.5 text-white bg-gray-600 rounded-md hover:bg-gray-700 transition"
