@@ -68,7 +68,7 @@ const HomePage = () => {
                             value={newProjectName}
                             onChange={(e) => setNewProjectName(e.target.value)}
                             placeholder="Project Name"
-                            className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:border-gray-600"
+                            className="w-full text-black p-3 border rounded-lg dark:bg-gray-700 dark:border-gray-600"
                         />
                         <div className="flex items-center gap-2">
                             <input
@@ -97,8 +97,8 @@ const HomePage = () => {
                 {projects.map((project) => (
                     <div
                         key={project._id}
-                        className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 cursor-pointer 
-                                hover:shadow-lg transition-shadow relative"
+                        className= {`${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-50 text-gray-900'} rounded-lg shadow-md p-6 cursor-pointer 
+                                hover:shadow-lg transition-shadow relative`}
                         onClick={() => navigate(`/project/${project._id}`)}
                     >
                         <button className='border-gray-400' onClick={() => navigate("/commit")}>
