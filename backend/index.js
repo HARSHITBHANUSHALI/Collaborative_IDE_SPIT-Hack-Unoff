@@ -9,7 +9,6 @@ const corsOptions = require('./config/corsOptions');
 const credentials = require('./middleware/credentials');
 
 const port = process.env.PORT || 4000;
-
 connectDB();
 app.use(credentials);
 app.use(express.urlencoded({ extended: false }));
@@ -20,10 +19,13 @@ app.use(cookieParser());
 
 app.use('/auth', require('./routes/authRoutes'));
 app.use(verifyJWT);
+<<<<<<< Updated upstream
 
 app.use('/api/commit' , require('./routes/commitRoutes'))
 
 
+=======
+>>>>>>> Stashed changes
 app.use('/compile', require('./routes/compileRoutes'));
 app.use('/projects', require('./routes/projectRoutes'));
 

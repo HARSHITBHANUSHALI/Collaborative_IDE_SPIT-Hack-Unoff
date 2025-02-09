@@ -99,3 +99,11 @@
     @apply w-0.5 absolute pointer-events-none;
   }
 }
+
+.monaco-cursor-container:hover .monaco-cursor-tooltip {
+  opacity: 1 !important;
+}
+
+.monaco-cursor {
+  pointer-events: all !important;
+}

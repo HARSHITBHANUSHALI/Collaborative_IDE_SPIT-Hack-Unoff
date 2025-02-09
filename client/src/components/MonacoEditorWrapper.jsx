@@ -324,21 +324,21 @@ const showSuggestion = (suggestionText, position) => {
           </div>
 
           <div className="flex justify-center gap-3">
-            <button 
+    <button 
               onClick={handleSubmit}
-              className="flex items-center gap-2 px-4 py-1.5 text-green-400 border border-green-400 rounded-md transition duration-200 hover:bg-green-500 hover:text-white"
+              className="flex items-center gap-2 px-4 py-1.5 text-blue-400 rounded-md transition duration-200 hover:bg-blue-500 hover:text-white"
             >
-              <Play size={16} />
-              Run
-            </button>
-            <button 
+      <Play size={16} />
+      Run
+    </button>
+    <button 
               onClick={handleSubmit} 
-              className="flex items-center gap-2 px-4 py-1.5 text-orange-400 border border-orange-400 rounded-md transition duration-200 hover:bg-orange-500 hover:text-white"
+              className="flex items-center gap-2 px-4 py-1.5 text-white rounded-md transition duration-200 hover:bg-gray-700"
             >
-              <Upload size={16} />
-              Submit
-            </button>
-          </div>
+      <Upload size={16} />
+      Submit
+    </button>
+  </div>
 
           <div className="flex justify-end gap-2">
             <button
