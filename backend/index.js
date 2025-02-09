@@ -19,13 +19,8 @@ app.use(cookieParser());
 
 app.use('/auth', require('./routes/authRoutes'));
 app.use(verifyJWT);
-<<<<<<< Updated upstream
 
 app.use('/api/commit' , require('./routes/commitRoutes'))
-
-
-=======
->>>>>>> Stashed changes
 app.use('/compile', require('./routes/compileRoutes'));
 app.use('/projects', require('./routes/projectRoutes'));
 
