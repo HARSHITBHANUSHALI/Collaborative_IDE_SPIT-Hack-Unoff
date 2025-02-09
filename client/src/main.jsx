@@ -10,6 +10,7 @@ import {
 } from "@liveblocks/react/suspense";
 import { UserContextProvider } from './userContext';
 import { ThemeContextProvider } from './ThemeContext';
+import { FileContextProvider } from './FileContext';
 
 const root = createRoot(document.getElementById('root'));
 
@@ -17,13 +18,13 @@ root.render(
   <StrictMode>
     <UserContextProvider>
       <ThemeContextProvider>
-        <BrowserRouter>
-          <LiveblocksProvider publicApiKey={"pk_dev_2rQ_sf_wK2K5sLImvR6lkQyLrAh6bmpZMaayf6KIw1uHYmueOpeBhHcBiWayEZ8E"}>
-            <RoomProvider id="my-room">
-              <App />
-            </RoomProvider>
-          </LiveblocksProvider>
-        </BrowserRouter>
+        <FileContextProvider>
+          <BrowserRouter>
+            <LiveblocksProvider publicApiKey={"pk_dev_2rQ_sf_wK2K5sLImvR6lkQyLrAh6bmpZMaayf6KIw1uHYmueOpeBhHcBiWayEZ8E"}>        
+                <App />
+            </LiveblocksProvider>
+          </BrowserRouter>
+        </FileContextProvider>
       </ThemeContextProvider>
     </UserContextProvider>
   </StrictMode>

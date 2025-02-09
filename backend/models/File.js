@@ -12,7 +12,13 @@ const fileSchema = new mongoose.Schema({
         timestamp: { type: Date, default: Date.now },
       },
     ],
+    collaborators: [
+      {
+        user: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // Reference to User model
+        role: { type: String, enum: ["owner", "editor", "viewer"], default: "viewer" }
+      }
+    ],
     createdAt: { type: Date, default: Date.now },
-  });
-  
-  module.exports = mongoose.model("File", fileSchema);
+});
+
+module.exports = mongoose.model("File", fileSchema);
