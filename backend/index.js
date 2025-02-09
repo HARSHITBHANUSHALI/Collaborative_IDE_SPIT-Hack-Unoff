@@ -21,6 +21,11 @@ app.use('/auth', require('./routes/authRoutes'));
 app.use(verifyJWT);
 
 app.use('/api/commit' , require('./routes/commitRoutes'))
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
 app.use('/compile', require('./routes/compileRoutes'));
 app.use('/projects', require('./routes/projectRoutes'));
 
