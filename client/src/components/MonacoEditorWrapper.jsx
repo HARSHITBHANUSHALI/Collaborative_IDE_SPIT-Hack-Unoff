@@ -105,12 +105,12 @@ const showSuggestion = (suggestionText, position) => {
   const fetchInitialCode = async () => {
     try {
       const response = await axios.get(`/api/commit/getCode/${fileId}`);
-      if (response.data && response.data.commits) {
+      if (response.data && response.data.commit) {
         if (editorRef.current) {
           // Combine all commit contents into a single string or use a specific logic to display
-          const commits = response.data.commits.map(c => c.content).join('\n\n'); // Joins all commit contents with a new line
-          editorRef.current.setValue(commits); // Set the value in the editor
-          setLastCode(commits); // Update the state with the combined code
+          ///const commits = response.data.commits.map(c => c.content).join('\n\n'); // Joins all commit contents with a new line
+          editorRef.current.setValue(response.data.commit).join('\n\n'); // Set the value in the editor
+          setLastCode(response.data.commit.content); // Update the state with the combined code
         }
       }
     } catch (error) {
@@ -131,7 +131,8 @@ const showSuggestion = (suggestionText, position) => {
     try {
       const response = await axios.post('/api/commit/save-commit', {
         content: editorRef.current.getValue(),
-        fileId
+        fileId,
+        projectId
       });
       
       if (response.data) {

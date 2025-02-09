@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { VscGitCommit } from "react-icons/vsc";
+import { useParams } from "react-router-dom";
 
 const CommitsPage = () => {
   const [commits, setCommits] = useState([]);
@@ -8,28 +9,19 @@ const CommitsPage = () => {
   const [selectedTimeframe, setSelectedTimeframe] = useState("all");
   const [selectedUsers, setSelectedUsers] = useState("all");
   const [loading, setLoading] = useState(true);
+  const { projectId } = useParams(); // Destructure to get the actual ID value
 
-  useEffect(() => {
-
-    fetchCommits();
-  }, [selectedBranch]);
-  const fetchCommits = async () => {
+const fetchCommits = async () => {
     try {
-      const response = await axios.get("/api/commit/getCommits");
+      const response = await axios.get(`http://localhost:4000/api/commit/getCommits/${projectId}`);
       
-      // Fix: Check for 'commit' instead of 'commits' in response
       if (response.data.success && Array.isArray(response.data.commit)) {
         const formattedCommits = response.data.commit.map(commit => ({
-          id: commit.id ,
+          id: commit.id,
           content: commit.content || 'No message',
           date: new Date().toISOString(),
-          author: commit.author || 'Unknown',
-          branch: commit.branch || selectedBranch
         }));
         setCommits(formattedCommits);
-      } else {
-        console.error("Invalid commit data structure:", response.data);
-        setCommits([]);
       }
     } catch (error) {
       console.error("Error fetching commits:", error);
@@ -37,8 +29,10 @@ const CommitsPage = () => {
     } finally {
       setLoading(false);
     }
-  };
-
+};
+  useEffect(() => {
+    fetchCommits();
+  }, []);
   // ...existing code...
 
   const handleRevert = async (commitId) => {

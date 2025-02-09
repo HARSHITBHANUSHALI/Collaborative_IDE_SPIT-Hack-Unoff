@@ -5,7 +5,7 @@ const Commit = require('../models/Commit');
 // Save new commit
 const commit = async(req , res) => {
   try {
-    const { content , fileId} = req.body;
+    const { content , fileId , projectId} = req.body;
     const userId = req.user.id;
     
     if (!fileId || !content || !userId) {
@@ -18,6 +18,7 @@ const commit = async(req , res) => {
     const commit = new Commit({
       file: fileId,
       content,
+      project: projectId,
       committedBy: userId
     });
 
@@ -38,13 +39,14 @@ const commit = async(req , res) => {
 const getCommit = async (req, res) => {
     try {
       const token = req.cookies.jwt;
+      const {projectId} = req.params;
       
       if (!token) {
         return res.status(401).json({ success: false, error: "Unauthorized" });
       }
   
       // Fetch all commits from MongoDB
-      const commits = await Commit.find();
+      const commits = await Commit.find({project: projectId}).sort({ timestamp: -1 });
   
       // Transform commit data properly
       const formattedCommits = commits.map(commit => ({
@@ -96,8 +98,8 @@ const getCommit = async (req, res) => {
         const { fileId } = req.params;
 
         // Find all commits for this file
-        const commits = await Commit.find({ file: fileId })
-            .sort({ createdAt: -1 }) // Optional: to sort commits by most recent first
+        const commits = await Commit.findOne({ file: fileId })
+            .sort({ timestamp: -1 }) // Optional: to sort commits by most recent first
             .populate('committedBy'); // Populating 'committedBy' to include user information
 
         if (!commits || commits.length === 0) {
@@ -110,12 +112,7 @@ const getCommit = async (req, res) => {
         // Respond with all commits
         res.json({
             success: true,
-            commits: commits.map(commit => ({
-                id: commit._id,
-                content: commit.content,
-                createdAt: commit.createdAt,
-                committedBy: commit.committedBy // You can add other fields you want to display
-            }))
+            commit : commits.content
         });
     } catch (error) {
         console.error('Error fetching commits:', error);

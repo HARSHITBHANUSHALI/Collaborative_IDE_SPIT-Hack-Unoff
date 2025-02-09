@@ -4,7 +4,7 @@ const { commit , getCommit, deleteCommit, getCommitFiles} = require('../controll
 const router = express.Router();
 
 router.post('/save-commit', commit);
-router.get('/getCommits', getCommit);
+router.get('/getCommits/:projectId', getCommit);
 router.delete('/revert', deleteCommit);
 router.get('/getCode/:fileId', getCommitFiles);
 

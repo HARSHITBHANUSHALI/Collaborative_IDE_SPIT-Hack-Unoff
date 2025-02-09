@@ -21,6 +21,17 @@ export default function App() {
   const {file} = useContext(FileContext);
   const fileName = file || 'fileName';  // Add this line
   return (
+    <Routes>
+      <Route path='/' element={<LandingPage />} />
+      <Route path='/redact-pdf' element={<RedactPdf />} />
+      <Route path='/signup' element={<Signup />} />
+      <Route path='/login' element={<Login />} />
+      {/* <Route path='/new' element={<CollaborativeEditor />} /> */}
+      <Route path='/home' element={<HomePage />} />
+      <Route path='/commit/:projectId' element={<CommitsPage />} />
+      <Route path="/project/:projectId" element={<ProjectView />} />
+      <Route path="/editor/:projectId/:fileId" element={<EditorPage />} />  {/* Add this route */}
+    </Routes>
     <RoomProvider id={`${fileName}`}>
       <Routes>
         <Route path='/' element={<LandingPage />} />
